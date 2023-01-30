@@ -1,13 +1,35 @@
+# I always recommend prefer to use i always like to use yaml file so i'm going to refactor this to the yaml and one more thing you can even
+# change this application to bootstrap.yaml so as per the preference bootstrap property file or yaml file gets the first preference.
+
+# Specify the netflix client so you will be able to see whether zuul is registered or not and for doing that you have to enable the dependency of eureka client
+# inside the pom.xml. Now when you go to eureka refresh that now you can see techfex-zuul-api-gateway-server is added so now eureka knows that we have registered
+# will appear gateway server so if zuul api gateway is going to access any services, naming server will know that and will will help to serve the request.
+
 spring:
   application:
     name: techefx-zuul-api-gateway-server
 
-
 server:
   port: ${port:8765}
 
-
+# Specify the routing details
 zuul:
   routes:
     product-enquiry: /product-enquiry/**
     url: http://localhost:8700/
+
+# So what we are trying to specify that we are saying that product-enquiry: is routing id and we are specifying the enquiry service endpoint
+# the whole objective of enabling zuul proxy is we are going to run enquiry service not directly with 8700 port as we have done so far right
+# so now going forward we will be accessing enquiry service through zuul proxy say like through 8 7 6 5 port number so to enable that we need to specify
+# the routing so with "product-enquiry:", we're specifying the route name and say anything which starts from product-enquiry if we are specifying anything
+# let's redirect to localhost 8700 so this is what the instruction i've given.
+
+#F or accessing enquiry service through port 8765 you have to additionally specify the service name so in this case we are saying techefx-product-enquiry-service
+# and now we are able to access the enquiry service endpoint through zuul proxy so as you keep on hitting, you can see that it is now redirected to different
+# instances so now 8802 is responding next time when you again hit it's 8801 and so on. This is what actually we have done so far that we have created zuul api
+# gateway server inside that zuul api gateway server we have specified the proxy i.e. we have a specified zuul routing and since we have single endpoint for
+# product enquiry and in case if you got multiple, you may provide the multiple routing name and url. We also have enabled eureka client with zuul api proxy
+# and that is the reason it is now registered to eureka and then we were able to access the enquiry service endpoint through 8765 which is zuul api proxy port
+#
+# I just want to highlight one thing that this is just an introductory session for zuul api gateway, there are really a lot many things which can be performed
+# through any api gateway and this is really a very vast topic.
